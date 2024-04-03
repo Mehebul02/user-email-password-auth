@@ -5,15 +5,13 @@ import Footer from '../footer/Footer';
 
 const Root = () => {
     return (
-        <div>
-            <div className=''>
+        <div className='min-h-[calc(100vh-130px)] '>
+          
             <Header/>
-            </div>
-            
-            <div className="min-h-[calc(100vh-120px)] ">
+         
             <Outlet/>
             <Footer/>
-            </div>
+            
         </div>
     );
 };
