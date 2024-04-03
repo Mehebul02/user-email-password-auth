@@ -6,6 +6,7 @@ const Header = () => {
     <li className="text-2xl text-black font-semibold"><NavLink to='/'>Home</NavLink></li>
     <li className="text-2xl text-black font-semibold"><NavLink to='/login'>Login</NavLink></li>
     <li className="text-2xl text-black font-semibold"><NavLink to='/register'>Register</NavLink></li>
+    <li className="text-2xl text-black font-semibold"><NavLink to='/hero'>Hero</NavLink></li>
     </>
     return (
         <div>

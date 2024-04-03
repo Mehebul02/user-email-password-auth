@@ -1,17 +1,39 @@
-import React from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import React, { useState } from 'react';
+import auth from '../../firebase_config';
 
 const Register = () => {
+  const [registerError ,setRegisterError]=useState('')
+const [success,setSuccess] =useState('')
     const handleSubmit =(e) =>{
        e.preventDefault()
        const email =e.target.email.value
        const password =e.target.password.value
        console.log(email,password)
+      //  reset error 
+      setRegisterError('')
+      // Success massage 
+      setSuccess('')
+
+       createUserWithEmailAndPassword(auth,email,password)
+       .then(result =>{
+        console.log(result.user)
+        setSuccess('Users Created Successfully')
+        
+     
+       
+       })
+       .catch(error =>{
+        console.log(error)
+        setRegisterError('Email already in use')
+        
+       })
 
     }
     return (
         <div>
              <div className="w-1/2 mx-auto  gap-6 flex flex-col items-center justify-center 
-             min-h-[calc(100vh-130px)] border rounded-xl shadow-lg"> 
+             min-h-[calc(100vh-160px)] border rounded-xl shadow-lg"> 
            <form onSubmit={handleSubmit}>
            
          <label className="input input-bordered flex items-center gap-2">
@@ -23,8 +45,18 @@ const Register = () => {
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" clipRule="evenodd" /></svg>
   <input type="password" name='password' className="grow" placeholder='password' />
 </label> 
-<button className='btn  w-full bg-yellow-600 text-xl text-white mt-10 font-bold'>Submit</button>
+<button className='btn  w-full bg-yellow-600 text-xl text-white mt-10 font-bold'>Register</button>
            </form>
+           
+           {
+            registerError && <p className='text-xl text-red-500'>{registerError}</p>
+           }
+           {
+            setSuccess && <p className='text-xl text-green-600'>{success}</p>
+           }
+           <div>
+            
+           </div>
         </div>
         </div>
     );

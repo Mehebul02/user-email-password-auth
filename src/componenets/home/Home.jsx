@@ -13,6 +13,7 @@ const Home = () => {
       setTypingStatus('Typing...');
     },
     'Mehebul Alif',
+    'Web Developer',
     () => {
       setTypingStatus('Done Typing');
     },

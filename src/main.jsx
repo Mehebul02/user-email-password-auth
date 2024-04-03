@@ -9,6 +9,7 @@ import Root from './componenets/root/Root';
 import Home from './componenets/home/Home';
 import Login from './componenets/login/Login';
 import Register from './componenets/register/Register';
+import Hero from './componenets/hero/Hero';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path:'/register',
         element:<Register/>
+      },
+      {
+        path:'/hero',
+        element:<Hero/>
       }
     ]
   },
