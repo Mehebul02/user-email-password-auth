@@ -1,12 +1,13 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import auth from "../../firebase_config";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 
 const Login = () => {
   const [loginError,setLoginError] =useState('')
   const [loginSuccess,setLoginSuccess] =useState('')
+  const emailRef =useRef(null)
   const handleLogin=(e)=>{
     e.preventDefault()
     const email = e.target.email.value
@@ -19,7 +20,12 @@ const Login = () => {
     .then(result =>{
       const logged =result.user
       console.log(logged)
-      setLoginSuccess('Successfully email login')
+      if(result.user.emailVerified){
+        setLoginSuccess('Successfully email login')
+      }
+      else{
+        alert('Please verify email address')
+      }
     })
     .catch(error =>{
       console.log(error)
@@ -27,14 +33,33 @@ const Login = () => {
     })
 
   }
+  const handleForgetPassword =()=>{
+    const email =emailRef.current.value
+    if(!email){
+      console.log('Please Provide your email',emailRef.current.value)
+      return
+    }
+    else if(! /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      console.log('Please write a valid email ')
+      return;
+    }
+   sendPasswordResetEmail(auth,email)
+   .then(() =>{
+    alert('Please Check Your Email')
+
+   })
+   .catch(error =>{
+    console.log(error)
+   })
+  }
     return (
     <div>
        <div className="flex justify-center items-center  min-h-[calc(90vh-130px)] space-y-14">
       <form onSubmit={handleLogin}>
-      <input  type="text" name="email" placeholder="Email" className="input  w-full input-bordered input-secondary  max-w-xs" /><br /><br />
+      <input  type="text" name="email" ref={emailRef} placeholder="Email" className="input  w-full input-bordered input-secondary  max-w-xs" /><br /><br />
       <input type="password" name="password" placeholder="Password" className="input input-bordered input-secondary w-full max-w-xs" /><br /><br />
       <label className="label">
-            <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+            <a onClick={handleForgetPassword} href="#" className="label-text-alt link link-hover">Forgot password?</a>
           </label>
       <input className="btn w-full bg-yellow-600 text-xl font-bold text-white " type="submit" value='Login' name="" id="" />
       </form>
