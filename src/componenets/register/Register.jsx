@@ -3,6 +3,7 @@ import {  FaEyeSlash,FaEye } from 'react-icons/fa';
 
 import auth from '../../firebase_config';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
   const [registerError ,setRegisterError]=useState('')
@@ -79,6 +80,7 @@ const [showPassword,setShowPassword]=useState(false)
            {
             setSuccess && <p className='text-xl text-green-600'>{success}</p>
            }
+         <p>Already have an account? Please <Link to='/login'>Login</Link></p>
            <div>
             
            </div>
